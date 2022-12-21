@@ -23,7 +23,7 @@ public class Deck {
 	  }  
 	  
 
-	  public void shuffle() {
+	  public void shuffleDeck() {
 	    // Shuffle the deck
 	    Random random = new Random();
 	    
@@ -42,7 +42,7 @@ public class Deck {
 	  }
 	  
 	  
-	  public void cut() {
+	  public void cutDeck() {
 		
 		  Scanner sc = new Scanner(System.in);
 		    System.out.println("Enter the cut point: ");
@@ -66,7 +66,7 @@ public class Deck {
 	  
 	  public int counter = 0 ;
 	  public int counter2 = 0;
-	  public int c = 0;
+	  public int counter3 = 0;
 	  
 	  
 	  public void boardCards() {
@@ -93,9 +93,9 @@ public class Deck {
 					  counter2++;
 				  }
 				  else {
-					  computer[c] = deck[i];
+					  computer[counter3] = deck[i];
 					  deck[i] = null;
-					  c++;
+					  counter3++;
 				  }
 			  }
 			  

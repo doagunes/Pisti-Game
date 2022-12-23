@@ -54,11 +54,63 @@ public class Game {
 					System.out.println(player1[i]);
 				}
 			}
+			if(player1[0] == null) {
+				dealcard.dealCards();
+				System.out.println("Deal cards..");
+				dealcard.dealCards();
+				selectCard();
+			}
+			
+			selectCard();
 		}
 	
+		
+		
+		if(x == 2 && player1[x - 1].charAt(0) == board[3].charAt(0)) {
+			
+			System.out.println("On the board" + player1[x - 1]);
+			player1[0] = player1[1];
+			player1[1] = player1[2];
+			player1[2] = player1[3];
+			player1[3] = null;
+			
+			for(int i=0;i<player1.length;i++) {
+				
+				if(player1[i] != null) {
+					System.out.println(player1[i]);
+					
+					
+				}
+			}
+			
+			selectCard();
+			
+		}else if(x == 2 && player1[x - 1].charAt(0) != board[3].charAt(0)) {
+			
+			player1[0] = player1[1];
+			player1[1] = player1[2];
+			player1[2] = player1[3];
+			player1[3] = null;
+			
+			
+			for(int i=0;i<player1.length;i++) {
+				if(player1[i] != null) {
+					System.out.println(player1[i]);
+				}
+			}
+			
+			System.out.println("On the board" + player1[x - 1]);
+			
+			selectCard();
+			
+		}
+		
+		
+	
+		
+	
+	
+	
 	}
-	
-	
-	
 
 }

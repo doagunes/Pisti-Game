@@ -118,7 +118,30 @@ public class Game {
 				}
 			}
 			
+			System.out.println("On the board" + player1[x - 1]);
+			selectCard();
+			
+		}else if(x == 3 && player1[x - 1].charAt(0) != board[3].charAt(0)) {
+			
+			player1[0] = player1[1];
+			player1[1] = player1[2];
+			player1[2] = player1[3];
+			player1[3] = null;
+			
+			
+			for(int i=0;i<player1.length;i++) {
+				if(player1[i] != null) {
+					System.out.println(player1[i]);
+				}
+			}
+			
+			System.out.println("On the board" + player1[x - 1]);
+			
+			selectCard();
+			
 		}
+		
+		
 	
 		
 	

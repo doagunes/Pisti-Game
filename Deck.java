@@ -1,161 +1,64 @@
 import java.util.Random;
-import java.util.Scanner;
 
 public class Deck {
-	
-      public static String[] deck = new String[52];
-      public static String[] player1 = new String[4];
-      public static String[] computer = new String[4];
-      public static String[] board = new String[4];
- 	  
+    public static String[] suits = {"♠", "♣", "♥", "♦"};
+    public static String[] values = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    private Card[] deck;
+    private int top;
 
-	  public Deck() {
-	    
-		String[] suits = {"♠", "♥", "♣", "♦"};
-		String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-	    
-	    
-	    for (int i = 0; i < suits.length; i++) {
-	      for (int j = 0; j < values.length; j++) {
-	        deck[i * values.length + j] = values[j] + " " + suits[i];
-	      }
-	    }
-	  }  
-	  
+    public Deck() {
+        this.deck = new Card[52];
+        int i = 0;
+        for(String suit : Deck.suits) {
+            for(String value : Deck.values) {
+                this.deck[i++] = new Card(suit, value);
+            }
+        }
+        this.top = 0;
+    }
 
-	  public void shuffleDeck() {
-	    // Shuffle the deck
-	    Random random = new Random();
-	    
-	    for (int i = 0; i < deck.length; i++) {
-	    	
-	      int index = random.nextInt(deck.length);
-	      String temp = deck[i];
-	      deck[i] = deck[index];
-	      deck[index] = temp;
-	    }
-	    
-	    for(int i = 0; i < deck.length ; i++ ) {
-	    	
-	    	System.out.println(deck[i]);
-	    }
-	  }
-	  
-	  
-	  public void cutDeck() {
-		
-		  Scanner sc = new Scanner(System.in);
-		    System.out.println("Enter the cut point: ");
-		    int cutPoint = sc.nextInt();
+    public void shuffle() {
+        Random r = new Random();
+        Card c;
+        for(int i = 0; i < deck.length; i++) {
+            int j = r.nextInt(deck.length);
+            c = deck[i];
+            deck[i] = deck[j];
+            deck[j] = c;
+        }
+    }
 
-		    // Cut the deck at the specified point
-		    String[] cutDeck = new String[deck.length];
-		    for (int i = 0; i < cutDeck.length; i++) {
-		      cutDeck[i] = deck[(i + cutPoint) % deck.length];
-		    }
+    public void cut(int index) {
+        if(index < 1 || index > 51)
+            return;
+        Card[] c = new Card[index];
+        for(int i = 0; i < index; i++) {
+            c[i] = this.deck[i];
+        }
+        for(int i = index; i < deck.length; i++) {
+            this.deck[i-index] = this.deck[i];
+        }
+        for(int i = 0; i < c.length; i++) {
+            this.deck[deck.length-index+i] = c[i];
+        }
+    }
 
-		    // Print the cut deck
-		    System.out.println("Cut deck: ");
-		    for (int i = 0; i < cutDeck.length; i++) {
-		      System.out.println(cutDeck[i] + " ");
-		    }
-		    System.out.println();
-	  }  
-	  
-	  
-	  
-	  public int counter = 0 ;
-	  public int counter2 = 0;
-	  public int counter3 = 0;
-	  
-	  
-	  public void boardCards() {
-		  
-		  int j = 0;
-		  for(int i = 8; i < 12; i++) {
-			  
-			  board[j] = deck[i];
-			  j++;
-		  }
-		  
-		  System.out.println("Cards from the table: " + board[j-1]);
-		  counter+=4;
-	  }
-	  
-	  public void dealCards() {
-		  
-		  for(int i = counter; i < counter + 8; i++) {
-			  if(deck[i] != null) {
-				  
-				  if(i % 2 != 0) {
-					  player1[counter2] = deck[i];
-					  deck[i] = null;
-					  counter2++;
-				  }
-				  else {
-					  computer[counter3] = deck[i];
-					  deck[i] = null;
-					  counter3++;
-				  }
-			  }
-			  
-		  }
-		  
-		  counter += 8;
-		  
-		  for(int i=0; i < player1.length; i++) {
-			  System.out.println("player 1 cards: " + " " + player1[i]);
-		  }
-		  
-		  for(int i=0; i < computer.length; i++) {
-			  System.out.println("computer cards: " + " " + computer[i]);
-		  }
-	  }
-	  
-	  
-	  
-}		  
-		  
-		  
-	  
-	  
-	   
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	    
-		  
+    public Card[] getDeck() {
+        return this.deck;
+    }
 
-	  		
-		    
-		  
+    public Card[] getTopFour() {
+        Card[] c = new Card[4];
+        for(int i = 0; i < 4; i++) {
+            c[i] = this.deck[this.top+i];
+        }
+        this.top += 4;
+        return c;
+    }
 
-	
-	
-	
-	
-	
-		
-		
-	
-		
-		
-	
-	
-	
-
-
+    public boolean isEmpty() {
+        if(this.top == 52)
+            return true;
+        return false;
+    }
+}
